@@ -1,6 +1,6 @@
 // GitCheckout.groovy
 
-def call(String repoUrl, String branch) {
+def call() {
     pipeline {
         agent any
 
@@ -13,8 +13,8 @@ def call(String repoUrl, String branch) {
                 steps {
                     script {
                         checkout([$class: 'GitSCM', 
-                                  branches: [[name: branch]], 
-                                  userRemoteConfigs: [[url: "https://$GITHUB_TOKEN@$repoUrl"]]])
+                                  branches: [[name: '*/main']], 
+                                  userRemoteConfigs: [[url: "https://$GITHUB_TOKEN@github.com/aman4433/spring-boot-hello-world.git"]]])
                     }
                 }
             }
