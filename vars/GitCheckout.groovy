@@ -28,6 +28,25 @@ def call() {
                     }
                 }
             }
+            stage('OWASP FS SCAN') {
+                steps {
+                    script {
+                        dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'Dependency-Check'
+                        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                    }
+                }
+            }
+
+            stage('docker build') {
+                agent any
+                steps {
+                    script {
+                        def gitCommitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                        echo "Git Commit ID: ${gitCommitId}"
+                        sh "docker build -t hello-world:${gitCommitId} ."
+                    }
+                }
+            }
         }
     }
 }
