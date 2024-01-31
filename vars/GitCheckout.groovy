@@ -5,7 +5,7 @@ def call(String repoUrl, String branch) {
         agent any
 
         environment {
-            GITHUB_TOKEN = credentials(GITPAT)
+            GITHUB_TOKEN = credentials('GITPAT')
         }
 
         stages {
