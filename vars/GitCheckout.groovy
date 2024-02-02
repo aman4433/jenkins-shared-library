@@ -4,12 +4,12 @@ def call() {
     pipeline {
         agent any
 
-        environment {
-            GITHUB_TOKEN = credentials('GITPAT')
-        }
+       // environment {
+         //   GITHUB_TOKEN = credentials('GITPAT')
+       // }
 
         stages {
-            stage('checkout and build') {
+            stage('Build') {
                 agent {
                     docker {
                         image 'maven:3.8.1-adoptopenjdk-11'
@@ -17,10 +17,10 @@ def call() {
                     }
                 }
                 steps {
-                    script {
-                        checkout([$class: 'GitSCM', 
-                                  branches: [[name: '*/main']], 
-                                  userRemoteConfigs: [[url: "https://$GITHUB_TOKEN@github.com/aman4433/spring-boot-hello-world.git"]]])
+                   script {
+              //          checkout([$class: 'GitSCM', 
+                //                  branches: [[name: '*/main']], 
+                  //                userRemoteConfigs: [[url: "https://$GITHUB_TOKEN@github.com/aman4433/spring-boot-hello-world.git"]]])
                         sh 'pwd'
                         sh 'ls -ltr'
                         sh 'mvn --version'
